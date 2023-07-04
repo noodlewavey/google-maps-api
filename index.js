@@ -65,6 +65,7 @@ app.get('/directions', async (req, res) => {
   
       const translation = response.data.translatedText;
       console.log('Translation:', translation);
+      //nevermind this works
       console.log('response', response.data)
       res.json({ translation });
     } catch (error) {
@@ -73,6 +74,24 @@ app.get('/directions', async (req, res) => {
     }
   });
   
+  
+  app.get('/languages', async (req, res) => {
+    try {
+      const response = await axios.post('https://translate.argosopentech.com/languages', {
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const languages = response.data;
+      console.log('Languages:', response.data);
+      res.json({ languages });
+    } catch (error) {
+      console.error('Couldnt retrieve languages:', error);
+      res.status(500).json({ error: 'Languages not available' });
+    }
+  });
   
   
 // Start the server
