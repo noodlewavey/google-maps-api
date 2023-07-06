@@ -4,6 +4,11 @@ require('dotenv').config();
 
 const app = express();
 const port = 4000; // this is the port 
+const cors = require('cors');
+
+app.use(cors());
+
+app.use(express.json());
 
 // 
 app.get('/directions', async (req, res) => {
@@ -51,28 +56,26 @@ app.get('/directions', async (req, res) => {
   });
 
 
-  app.get('/translate', async (req, res) => {
+  app.post('/translate', async (req, res) => {
     try {
+      const { q, source, target } = req.body;
       const response = await axios.post('https://translate.argosopentech.com/translate', {
-        q: 'Ciao!',
-        source: 'auto',
-        target: 'en',
+        q,
+        source,
+        target,
       }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-  
-      const translation = response.data.translatedText;
-      console.log('Translation:', translation);
-      //nevermind this works
-      console.log('response', response.data)
-      res.json({ translation });
+      res.json(response.data);
     } catch (error) {
-      console.error('Translation failed:', error);
-      res.status(500).json({ error: 'Translation failed' });
+      console.error(error);
+      console.log(q);
+      res.status(500).json({ error: 'An error occurred' });
     }
   });
+  
   
   
   app.get('/languages', async (req, res) => {
