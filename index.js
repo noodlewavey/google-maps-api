@@ -16,8 +16,8 @@ app.get('/directions', async (req, res) => {
     //const origin = req.query.origin; // Get the origin from the query parameters
     //const destination = req.query.destination;
     //const mode = req.query.mode
-    const origin = '9+McKee+Avenue+North+York+ON';
-    const destination = 'North+York+Centre+Station';
+    const origin = 'North York Centre Station';
+    const destination = 'Bloor Station';
     const mode = 'walking'
   
     const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}&mode=${mode}`;
@@ -27,8 +27,11 @@ app.get('/directions', async (req, res) => {
       const response = await axios.get(apiUrl);
       const directions = response.data;
       console.log('Directions received:', directions);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.end(JSON.stringify(directions, null, 2));
       res.json(directions);
     } catch (error) {
+      console.log(apiUrl);
       console.error('Could not get directions:', error);
       res.status(500).json({ error: 'Could not get directions' });
     }
