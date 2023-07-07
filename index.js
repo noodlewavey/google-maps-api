@@ -11,31 +11,25 @@ app.use(cors());
 app.use(express.json());
 
 // 
-app.get('/directions', async (req, res) => {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-    //const origin = req.query.origin; // Get the origin from the query parameters
-    //const destination = req.query.destination;
-    //const mode = req.query.mode
-    const origin = 'North York Centre Station';
-    const destination = 'Bloor Station';
-    const mode = 'walking'
-  
-    const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}&mode=${mode}`;
-    console.log('API Request URL:', apiUrl);
-  
-    try {
-      const response = await axios.get(apiUrl);
-      const directions = response.data;
-      console.log('Directions received:', directions);
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.end(JSON.stringify(directions, null, 2));
-      res.json(directions);
-    } catch (error) {
-      console.log(apiUrl);
-      console.error('Could not get directions:', error);
-      res.status(500).json({ error: 'Could not get directions' });
-    }
-  });
+app.post('/directions', async (req, res) => {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const { origin, destination, mode } = req.body;
+
+  const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}&mode=${mode}`;
+  console.log('API Request URL:', apiUrl);
+
+  try {
+    const response = await axios.get(apiUrl);
+    const directions = response.data;
+    console.log('Directions received:', directions);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.end(JSON.stringify(directions, null, 2));
+  } catch (error) {
+    console.log(apiUrl);
+    console.error('Could not get directions:', error);
+    res.status(500).json({ error: 'Could not get directions' });
+  }
+});
 
   app.get('/streetview', async (req, res) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
