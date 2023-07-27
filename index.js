@@ -54,6 +54,11 @@ app.post('/directions', async (req, res) => {
 
 
   app.post('/translate', async (req, res) => {
+
+    if (!req.body || !req.body.q || !req.body.source || !req.body.target) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
     try {
       const { q, source, target } = req.body;
       const response = await axios.post('https://translate.argosopentech.com/translate', {
@@ -68,7 +73,6 @@ app.post('/directions', async (req, res) => {
       res.json(response.data);
     } catch (error) {
       console.error(error);
-      console.log(q);
       res.status(500).json({ error: 'An error occurred' });
     }
   });
