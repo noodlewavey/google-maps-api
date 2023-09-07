@@ -34,7 +34,9 @@ app.post('/directions', async (req, res) => {
   app.get('/streetview', async (req, res) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     //const location = req.query.location; // Get the location from the query parameters
-    const location = '43.7687264, -79.4136525'
+    //const location = '43.7687264, -79.4136525'
+
+    const location = req.query.location;
     const size = '300x300';
     const apiUrl = `https://maps.googleapis.com/maps/api/streetview?location=${location}&key=${apiKey}&size=${size}`;
     console.log('Street View API Request URL:', apiUrl);
