@@ -10,6 +10,15 @@ app.use(cors());
 
 app.use(express.json());
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
 // 
 app.post('/directions', async (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
