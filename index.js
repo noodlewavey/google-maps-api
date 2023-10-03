@@ -82,6 +82,7 @@ app.post('/directions', async (req, res) => {
       res.json(response.data);
     } catch (error) {
       console.error(error);
+      console.log(response); //added for debugging 
       res.status(500).json({ error: 'An error occurred' });
     }
   });
