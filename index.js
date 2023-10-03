@@ -30,7 +30,6 @@ app.post('/directions', async (req, res) => {
     const response = await axios.get(apiUrl);
     const directions = response.data;
     console.log('Directions received:', directions);
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.end(JSON.stringify(directions, null, 2));
   } catch (error) {
     console.log(apiUrl);
