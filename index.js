@@ -6,7 +6,6 @@ const app = express();
 const port = 4000; // this is the port 
 const cors = require('cors');
 
-app.use(cors());
 
 app.use(express.json());
 
