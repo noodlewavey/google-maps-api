@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(express.json());
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://where-to-go-maps.vercel.app/'],
+  origin: ['http://localhost:3000', 'https://where-to-go-maps.vercel.app'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
